@@ -4,7 +4,7 @@
 
 export const DEMO_USERS = [
   { id: 1, email: 'admin@smartwaste.com', password: 'admin123', role: 'ADMIN',  name: 'Admin User' },
-  { id: 2, email: 'user@smartwaste.com',  password: 'user123',  role: 'USER',   name: 'Rahul Sharma' },
+  { id: 2, email: 'user@smartwaste.com',  password: 'user123',  role: 'USER',   name: 'G. Sai Srinivas' },
 ];
 
 export const WASTE_CATEGORIES = [
