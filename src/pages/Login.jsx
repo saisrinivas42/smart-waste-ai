@@ -7,6 +7,7 @@ export default function Login() {
   const { login }  = useApp();
   const navigate   = useNavigate();
 
+  const [name,     setName]     = useState('');
   const [email,    setEmail]    = useState('');
   const [password, setPassword] = useState('');
   const [showPwd,  setShowPwd]  = useState(false);
@@ -16,15 +17,17 @@ export default function Login() {
   function fillDemo(role) {
     setEmail(role === 'admin' ? 'admin@smartwaste.com' : 'user@smartwaste.com');
     setPassword(role === 'admin' ? 'admin123' : 'user123');
+    if (!name) setName(role === 'admin' ? 'Admin User' : '');
     setError('');
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
+    if (!name.trim()) { setError('Please enter your name.'); return; }
     setLoading(true);
     await new Promise(r => setTimeout(r, 600));
-    const result = login(email.trim(), password);
+    const result = login(email.trim(), password, name.trim());
     setLoading(false);
     if (result.success) navigate(result.user.role === 'ADMIN' ? '/admin' : '/dashboard');
     else setError(result.message);
@@ -84,6 +87,18 @@ export default function Login() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Your Name</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="Enter your full name"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  required
+                />
+              </div>
+
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email address</label>
                 <input

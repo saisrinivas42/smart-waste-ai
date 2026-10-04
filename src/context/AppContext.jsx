@@ -13,13 +13,15 @@ export function AppProvider({ children }) {
   const [sanitationRequests, setSanitationRequests] = useState(DEMO_SANITATION_REQUESTS);
 
   // ── Auth ──────────────────────────────────────────────────────────────────
-  function login(email, password) {
+  function login(email, password, name) {
     const user = DEMO_USERS.find(
       (u) => u.email === email && u.password === password
     );
     if (user) {
-      setCurrentUser(user);
-      return { success: true, user };
+      // Use the name the user typed at login instead of the hardcoded demo name
+      const userWithName = { ...user, name: name || user.name };
+      setCurrentUser(userWithName);
+      return { success: true, user: userWithName };
     }
     return { success: false, message: 'Invalid email or password.' };
   }
